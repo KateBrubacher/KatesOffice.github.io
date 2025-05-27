@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>A Virtual Robot Barista is Learning to See what You Are Drinking</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Theme CSS -->
+    <link href="css/clean-blog.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="index.html">166 Inter</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="index.html">Home</a>
+                    </li>
+                    <li>
+                        <a href="about.html">About</a>
+                    </li>
+                    <li>
+                        <a href="https://twitter.com/166inter">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header" style="background-image: url('img/coffeerobotcnet.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1>A Virtual Robot Barista is Learning to See what You Are Drinking</h1>
+                        <h2 class="subheading">Re-training Tensorflow's Inception to classify coffee and tea images</h2>
+                        <span class="meta">Posted by <a href="#">Nicholas Schmidt</a> on August 11, 2017</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Post Content -->
+    <article>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <h3> Intro </h4>
+
+                    <p> &emsp; Ok, all you barista reading, you don't need to worry about your job being replaced by a robot barista just yet. However, the power of the law of accelerating returns is not to be underestimated. Just a year about a year and a half ago, Bosh unveiled at CES a robotic system that would make your coffee using a fully automatic machine and print your name on the cup. At this year's CES, a <a href="https://www.youtube.com/watch?v=sgwD3UQXTRE" target="_blank"> new robot from Beijing</a> showed that it can make a cappuccino using a traditional espresso machine with a steaming wand completely on its own (save the cleaning). In this article you will see the results of what remarkable results you can achieve by retraining Google's convolutional neural network, Inception on just over 1000 coffee and tea images. </p>
+
+                    <h3> Methods</h4>
+
+                   <p> &emsp; The images I used come from five drink categories on ImageNet: hot chocolate, drip coffee, cappuccino, tea and turkish coffee. I had to weed out some broken files and images that surprisingly were clearly did not fit their category. I could have also downloaded latte pictures but saw the data set was filled with pictures that also could have passed as cappuccino from my judgement. The distinction between the two is somewhat arbitrary as they are both essentially just espresso and steamed milk.  </p>
+
+                    <h3> Results</h4>
+<p> &emsp; Here I downloaded some novel images to see how the classifier stacks up. I expected the network to struggle to distinguish between tea and drip coffee but it did surprisingly well: </p>
+                    
+                    <pre>
+  <code>
+Final test accuracy = 77.4% (N=106)
+  </code>
+</pre>
+<table width="100%" cellspacing="500">
+    <tr>
+        <td><img  src="img/cappucino_test.jpg" alt="https://raw.githubusercontent.com/166inter/166inter.github.io/master/test_photos/german_test.jpg" alt="Image not found" style="width:180px" border = "1px" />
+        
+
+        </td>
+        <td width="500%" align="center"><pre>
+                            <code>
+python label_image.py five_drinks/cappucino_test.jpg 
+cappuccino (score = 0.74192)
+hot chocolate (score = 0.15428)
+tea (score = 0.06182)
+turkish coffee (score = 0.02311)
+drip coffee (score = 0.01887)
+</code>
+</pre>
+        </td>
+    </tr>
+
+<tr>
+        <td><img  src="img/drip_coffee_test.jpg" alt="Image not found" style="width:110%" border = "1px" />
+        </td>
+        <td width="500%" align="center"> <pre>
+                            <code>
+python label_image.py five_drinks/drip_coffee_test.jpg 
+drip coffee (score = 0.60740)
+turkish coffee (score = 0.19728)
+tea (score = 0.11440)
+hot chocolate (score = 0.07358)
+cappuccino (score = 0.00735)
+</code>
+</pre>
+        </td>
+    </tr>
+
+<tr>
+        <td><img  src="img/drip_coffee_test2.jpg" alt="Image not found" style="width:110%" border = "1px" />
+
+
+        </td>
+        <td width="50%" align="center"><pre>
+                            <code>
+python label_image.py five_drinks/drip_coffee_test2.jpg 
+drip coffee (score = 0.58516)
+tea (score = 0.31279)
+hot chocolate (score = 0.04909)
+turkish coffee (score = 0.03188)
+cappuccino (score = 0.02107)
+</code>
+</pre>
+        </td>
+    </tr>
+
+<tr>
+        <td><img  src="img/hot_chocolate_test.jpg" alt="Image not found" style="width:110%" border = "1px" />
+
+
+        </td>
+        <td width="50%" align="center"><pre>
+                            <code>
+python label_image.py five_drinks/hot_chocolate_test.jpg 
+hot chocolate (score = 0.64988)
+tea (score = 0.27281)
+cappuccino (score = 0.04756)
+drip coffee (score = 0.02354)
+turkish coffee (score = 0.00621)
+</code>
+</pre>
+        </td>
+    </tr>
+
+<tr>
+        <td><img  src="img/hot_chocolate_test2.jpg" alt="Image not found" style="width:110%" border = "1px" />
+
+
+        </td>
+        <td width="50%" align="center"><pre>
+                            <code>
+python label_image.py five_drinks/hot_chocolate_test2.jpg 
+drip coffee (score = 0.50001)
+hot chocolate (score = 0.37443)
+turkish coffee (score = 0.06313)
+tea (score = 0.04177)
+cappuccino (score = 0.02066)
+</code>
+</pre>
+        </td>
+    </tr>
+    <tr>
+        <td><img  src="img/hot_chocolate_test3.jpg" alt="Image not found" style="width:180px" border = "1px" />
+        
+
+        </td>
+        <td width="500%" align="center"><pre>
+                            <code>
+python label_image.py five_drinks/hot_chocolate_test3.jpg 
+cappuccino (score = 0.53695)
+hot chocolate (score = 0.30773)
+drip coffee (score = 0.07558)
+tea (score = 0.04336)
+turkish coffee (score = 0.03638)
+</code>
+</pre>
+        </td>
+    </tr>
+
+<tr>
+        <td><img  src="img/tea_test.jpg" alt="Image not found" style="width:110%" border = "1px" />
+        </td>
+        <td width="500%" align="center"> <pre>
+                            <code>
+python label_image.py five_drinks/tea_test.jpg 
+tea (score = 0.71377)
+hot chocolate (score = 0.21653)
+turkish coffee (score = 0.03549)
+drip coffee (score = 0.03029)
+cappuccino (score = 0.00393)
+</code>
+</pre>
+        </td>
+    </tr>
+
+<tr>
+        <td><img  src="img/tea_test2.jpg" alt="Image not found" style="width:110%" border = "1px" />
+
+
+        </td>
+        <td width="50%" align="center"><pre>
+                            <code>
+python label_image.py five_drinks/tea_test2.jpg 
+tea (score = 0.87573)
+hot chocolate (score = 0.08557)
+drip coffee (score = 0.02440)
+turkish coffee (score = 0.01111)
+cappuccino (score = 0.00318)
+</code>
+</pre>
+        </td>
+    </tr>
+
+<tr>
+        <td><img  src="img/tea_test3.jpg" alt="Image not found" style="width:110%" border = "1px" />
+
+
+        </td>
+        <td width="50%" align="center"><pre>
+                            <code>
+python label_image.py five_drinks/tea_test3.jpg 
+tea (score = 0.73230)
+drip coffee (score = 0.13145)
+turkish coffee (score = 0.08367)
+hot chocolate (score = 0.03333)
+cappuccino (score = 0.01925)
+</code>
+</pre>
+        </td>
+    </tr>
+
+<tr>
+        <td><img  src="img/turkish_coffee_test.jpg" alt="Image not found" style="width:110%" border = "1px" />
+
+
+        </td>
+        <td width="50%" align="center"><pre>
+                            <code>
+python label_image.py five_drinks/turkish_coffee_test.jpg
+hot chocolate (score = 0.52486)
+turkish coffee (score = 0.19466)
+tea (score = 0.14934)
+cappuccino (score = 0.06875)
+drip coffee (score = 0.06238)
+</code>
+</pre>
+        </td>
+    </tr>
+
+<tr>
+        <td><img  src="img/turkish_coffee_test2.jpg" alt="Image not found" style="width:110%" border = "1px" />
+
+
+        </td>
+        <td width="50%" align="center"><pre>
+                            <code>
+python label_image.py five_drinks/turkish_coffee_test2.jpg
+turkish coffee (score = 0.89664)
+cappuccino (score = 0.05632)
+hot chocolate (score = 0.02193)
+tea (score = 0.01747)
+drip coffee (score = 0.00763)
+</code>
+</pre>
+        </td>
+    </tr>
+
+<tr>
+        <td><img  src="img/turkish_coffee_test3.jpg" alt="Image not found" style="width:110%" border = "1px" />
+
+
+        </td>
+        <td width="50%" align="center"><pre>
+                            <code>
+python label_image.py five_drinks/turkish_coffee_test3.jpg
+hot chocolate (score = 0.42020)
+turkish coffee (score = 0.26819)
+drip coffee (score = 0.14916)
+tea (score = 0.08913)
+cappuccino (score = 0.07332)
+</code>
+</pre>
+        </td>
+    </tr>
+
+</table>
+
+<h3> Discussion</h4>
+<p> &emsp; Before training on five drinks, I had additionally trained Inception  on just two categories: images of coffee and a random selection of "not coffee" images from ImageNet. The test results were very high (96.7%). However, when fed non-coffee images of drinks such as tea, hot chocolate or even an empty cup, the network was easily fooled. Perhaps there is some advantage in training two networks independently - one to identify a drink in the image and susequently pass it through another network to classify what kind of drink. But it would be much simpler to add "not coffee" as another category along with adequate images to the five drinks network.</p>
+
+<h3> Conclusion</h4>
+<p> &emsp; If a robot barista is going to make specialty coffee and talk about coffee with its customers, it should definitely look at drinks and be able to tell what they are. There is still work to be done on this subject but we are making remarkable progress.  </p>
+
+<hr/>
+
+
+                    <!--<p>For those who have seen the Earth from space, and for the hundreds and perhaps thousands more who will, the experience most certainly changes your perspective. The things that we share in our world are far more valuable than those which divide us.</p>
+
+                    <h2 class="section-heading">The Final Frontier</h2>
+
+                    <p>There can be no thought of finishing for ‘aiming for the stars.’ Both figuratively and literally, it is a task to occupy the generations. And no matter how much progress one makes, there is always the thrill of just beginning.</p>
+
+                    <p>There can be no thought of finishing for ‘aiming for the stars.’ Both figuratively and literally, it is a task to occupy the generations. And no matter how much progress one makes, there is always the thrill of just beginning.</p>
+
+                    <blockquote>The dreams of yesterday are the hopes of today and the reality of tomorrow. Science has not yet mastered prophecy. We predict too much for the next year and yet far too little for the next ten.</blockquote>
+
+                    <p>Spaceflights cannot be stopped. This is not the work of any one man or even a group of men. It is a historical process which mankind is carrying out in accordance with the natural laws of human development.</p>
+
+                    <h2 class="section-heading">Reaching for the Stars</h2>
+
+                    <p>As we got further and further away, it [the Earth] diminished in size. Finally it shrank to the size of a marble, the most beautiful you can imagine. That beautiful, warm, living object looked so fragile, so delicate, that if you touched it with a finger it would crumble and fall apart. Seeing this has to change a man.</p>
+
+                    <a href="#">
+                        <img class="img-responsive" src="img/post-sample-image.jpg" alt="">
+                    </a>
+                    <span class="caption text-muted">To go places and do things that have never been done before – that’s what living is all about.</span>
+
+                    <p>Space, the final frontier. These are the voyages of the Starship Enterprise. Its five-year mission: to explore strange new worlds, to seek out new life and new civilizations, to boldly go where no man has gone before.</p>
+
+                    <p>As I stand out here in the wonders of the unknown at Hadley, I sort of realize there’s a fundamental truth to our nature, Man must explore, and this is exploration at its greatest.</p>
+
+                    <p>Placeholder text by <a href="http://spaceipsum.com/">Space Ipsum</a>. Photographs by <a href="https://www.flickr.com/photos/nasacommons/">NASA on The Commons</a>.</p>-->
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                        <li>
+                            <a href="https://twitter.com/166inter">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/166inter">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-muted">Copyright &copy; Nic Schmidt 2017</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="js/jqBootstrapValidation.js"></script>
+    <script src="js/contact_me.js"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="js/clean-blog.min.js"></script>
+
+</body>
+
+</html>
